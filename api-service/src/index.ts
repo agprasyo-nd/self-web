@@ -1,10 +1,11 @@
 import express from 'express';
+import http from 'http';
 import cors from 'cors';
 import projectsRouter from './routes/projects';
 import contactRouter from './routes/contact';
 
 const app = express();
-const PORT = process.env.PORT ?? 4000;
+const PORT = Number(process.env.PORT ?? 4000);
 
 app.use(cors());
 app.use(express.json());
@@ -19,4 +20,12 @@ app.use((err: any, req: any, res: any, next: any) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
-app.listen(PORT, '0.0.0.0', () => console.log(`API listening on http://localhost:${PORT}`));
+const server = http.createServer(app);
+server.listen(PORT, '0.0.0.0', () => {
+  const addr = server.address();
+  if (addr && typeof addr === 'object') {
+    console.log(`Server listening on ${addr.address}:${addr.port} (family=${addr.family})`);
+  } else {
+    console.log(`Server listening on ${PORT}`);
+  }
+});
