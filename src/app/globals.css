@@ -8,23 +8,24 @@ body {
   background-color: #f9fafb;
   color: #111827;
 }
-
+/* Desktop-first base styles (design for desktop by default) */
 main {
-  max-width: 800px;
+  max-width: 1200px; /* wider base container for desktop */
   margin: 0 auto;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 nav {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 1.25rem;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 nav a {
   color: #2563eb;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 nav a:hover {
@@ -37,10 +38,28 @@ ul {
 }
 
 li {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 a {
   color: #2563eb;
   text-decoration: underline;
+}
+
+/* Mobile overrides: use narrower layout for small screens */
+@media (max-width: 767px) {
+  main {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  nav {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  li {
+    margin-bottom: 1.25rem;
+  }
 }

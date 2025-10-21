@@ -6,6 +6,12 @@ export const metadata = {
   description: 'Portfolio website built with Next.js',
 }
 
+// Next.js App Router expects a `viewport` export (move viewport config here)
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+}
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
