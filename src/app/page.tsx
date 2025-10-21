@@ -3,21 +3,30 @@
 // `/public/iPortfolio-1.0.0/`. When running in development or after export,
 // Next.js will serve files in the `public` folder from the web root.
 
-export default function HomePage() {
+import { fetchHome } from '../lib/api';
+
+export default async function HomePage() {
+  let home: any = null;
+  try {
+    home = await fetchHome();
+  } catch (e) {
+    // swallow - fallback to template
+  }
+
   return (
     <main style={{ padding: 0 }}>
-      {/*
-        We use an iframe to display the imported iPortfolio template. This
-        allows you to keep the original styling and scripts intact without
-        converting the HTML to JSX manually. Feel free to replace this
-        implementation with custom React components if you wish to port the
-        template natively into Next.js.
-      */}
+      {home && (
+        <header style={{ padding: '1rem', background: '#111', color: '#fff' }}>
+          <h1 style={{ margin: 0 }}>{home.heroTitle}</h1>
+          <p style={{ margin: 0 }}>{home.heroSubtitle}</p>
+        </header>
+      )}
+
       <iframe
         src="/iPortfolio-1.0.0/index.html"
         style={{ border: 'none', width: '100%', minHeight: '100vh' }}
         title="iPortfolio Template"
       />
     </main>
-  )
+  );
 }

@@ -1,10 +1,16 @@
 import Link from 'next/link'
+import { fetchAbout } from '../../lib/api';
 
 export const metadata = {
   title: 'About - My Portfolio',
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  let about: any = null;
+  try {
+    about = await fetchAbout();
+  } catch (e) {}
+
   return (
     <main>
       <nav>
@@ -12,13 +18,15 @@ export default function AboutPage() {
         <Link href="/about">About</Link>
         <Link href="/projects">Projects</Link>
       </nav>
-      <h1>About Me</h1>
-      <p>
-        This is a great place to introduce yourself. Write a few paragraphs about your
-        experience, skills, and what makes you passionate about technology or your
-        profession. You can also talk about your education, achievements, and any
-        hobbies or interests that make you stand out.
-      </p>
+      <h1>{about?.name ?? 'About Me'}</h1>
+      <p>{about?.bio ?? 'This is a great place to introduce yourself.'}</p>
+      {about?.skills && (
+        <ul>
+          {about.skills.map((s: string) => (
+            <li key={s}>{s}</li>
+          ))}
+        </ul>
+      )}
     </main>
   )
 }
